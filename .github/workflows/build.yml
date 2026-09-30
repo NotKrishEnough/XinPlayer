@@ -34,6 +34,10 @@ jobs:
       - name: Remove obsolete Kotlin Android plugin from taglib
         run: sed -i '/kotlin("android")/d' taglib/build.gradle.kts
 
+      - name: Align Media3 included-build AGP version
+        run: |
+          grep -RIl '9.0.0-rc03' media --include='*.toml' --include='*.gradle' --include='*.gradle.kts' | xargs -r sed -i 's/9.0.0-rc03/9.0.0/g'
+
       - name: Build debug APK
         run: ./gradlew assembleCoreDebug --stacktrace -DskipFormatKtlint
 
