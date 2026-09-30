@@ -27,8 +27,6 @@ import com.dd3boh.outertune.R
 import com.dd3boh.outertune.constants.TopBarInsets
 import com.dd3boh.outertune.ui.component.button.IconButton
 import com.dd3boh.outertune.ui.utils.backToMain
-import com.mikepenz.aboutlibraries.ui.compose.android.rememberLibraries
-import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,10 +34,9 @@ fun LibrariesScreen(
     navController: NavController,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-    val libraries by rememberLibraries(R.raw.aboutlibraries)
 
     Box(Modifier.windowInsetsPadding(LocalPlayerAwareWindowInsets.current)) {
-        LibrariesContainer(libraries, Modifier.fillMaxSize())
+        Box(Modifier.fillMaxSize()) { Text("Open-source library information is temporarily unavailable.") }
     }
 
     TopAppBar(
