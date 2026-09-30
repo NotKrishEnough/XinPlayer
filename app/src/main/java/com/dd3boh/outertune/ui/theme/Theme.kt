@@ -40,13 +40,13 @@ import com.dd3boh.outertune.utils.LocalArtworkPath
 import com.dd3boh.outertune.utils.coilCoroutine
 import com.google.material.color.dynamiccolor.DynamicScheme
 import com.google.material.color.hct.Hct
-import com.google.material.color.scheme.SchemeTonalSpot
+import com.google.material.color.scheme.SchemeVibrant
 import com.google.material.color.score.Score
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 // TODO: support for custom accent
-val DefaultThemeColor = Color(0xFFED5564)
+val DefaultThemeColor = Color(0xFF39FF14)
 
 @Composable
 fun OuterTuneTheme(
@@ -99,7 +99,7 @@ fun OuterTuneTheme(
     }
 
     val colorScheme = remember(darkTheme, pureBlack, themeColor) {
-        if (themeColor == DefaultThemeColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (enableDynamicTheme && themeColor == DefaultThemeColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val systemTheme = if (darkTheme) {
                 dynamicDarkColorScheme(context).pureBlack(pureBlack)
             } else {
@@ -118,7 +118,7 @@ fun OuterTuneTheme(
                 systemTheme
             }
         } else {
-            SchemeTonalSpot(Hct.fromInt(themeColor.toArgb()), darkTheme, 0.0)
+            SchemeVibrant(Hct.fromInt(themeColor.toArgb()), darkTheme, 0.0)
                 .toColorScheme()
                 .pureBlack(darkTheme && pureBlack)
         }
