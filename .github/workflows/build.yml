@@ -28,6 +28,9 @@ jobs:
       - name: Accept SDK licenses
         run: yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
 
+      - name: Remove obsolete Kotlin Android plugin from ffMetadataEx
+        run: sed -i '/kotlin("android")/d' ffMetadataEx/build.gradle.kts
+
       - name: Build debug APK
         run: ./gradlew assembleCoreDebug --stacktrace -DskipFormatKtlint
 
@@ -64,4 +67,7 @@ jobs:
             MESSAGE="❌ XinPlayer build $BUILD_RESULT.%0ABranch: $BRANCH%0ACheck logs: $RUN_URL"
           fi
 
-          curl --fail-with-body --silent --show-error             --request POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage"             --data-urlencode "chat_id=${CHAT_ID}"             --data-urlencode "text=${MESSAGE}"
+          curl --fail-with-body --silent --show-error \
+            --request POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${CHAT_ID}" \
+            --data-urlencode "text=${MESSAGE}"
