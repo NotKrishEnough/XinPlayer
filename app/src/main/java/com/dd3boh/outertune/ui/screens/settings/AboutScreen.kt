@@ -208,7 +208,7 @@ fun AboutScreen(
                     onClick = {
                         val clipData = ClipData.newPlainText(
                             context.getString(R.string.app_name),
-                            AnnotatedString("xinplayer@proton.me")
+                            AnnotatedString("outertune@protonmail.com")
                         )
                         clipboardManager.nativeClipboard.setPrimaryClip(clipData)
                     }
