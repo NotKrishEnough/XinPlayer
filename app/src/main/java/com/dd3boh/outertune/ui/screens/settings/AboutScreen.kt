@@ -107,7 +107,7 @@ fun AboutScreen(
             verticalAlignment = Alignment.Top,
         ) {
             Text(
-                text = "OuterTune",
+                text = "XinPlayer",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
@@ -153,14 +153,14 @@ fun AboutScreen(
             IconLabelButton(
                 text = "GitHub",
                 painter = painterResource(R.drawable.github),
-                onClick = { uriHandler.openUri("https://github.com/OuterTune/OuterTune") },
+                onClick = { uriHandler.openUri("https://github.com/NotKrishEnough/XinPlayer") },
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
 
             IconLabelButton(
                 text = stringResource(R.string.wiki),
                 icon = Icons.Outlined.Info,
-                onClick = { uriHandler.openUri("https://github.com/OuterTune/OuterTune/wiki") },
+                onClick = { uriHandler.openUri("https://github.com/NotKrishEnough/XinPlayer/wiki") },
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
         }
@@ -194,13 +194,13 @@ fun AboutScreen(
                 PreferenceEntry(
                     title = { Text(stringResource(R.string.help_bug_report_action)) },
                     onClick = {
-                        uriHandler.openUri("https://github.com/OuterTune/OuterTune/issues")
+                        uriHandler.openUri("https://github.com/NotKrishEnough/XinPlayer/issues")
                     }
                 )
                 PreferenceEntry(
                     title = { Text(stringResource(R.string.help_support_forum)) },
                     onClick = {
-                        uriHandler.openUri("https://github.com/OuterTune/OuterTune/discussions")
+                        uriHandler.openUri("https://github.com/NotKrishEnough/XinPlayer/discussions")
                     }
                 )
                 PreferenceEntry(
@@ -208,7 +208,7 @@ fun AboutScreen(
                     onClick = {
                         val clipData = ClipData.newPlainText(
                             context.getString(R.string.app_name),
-                            AnnotatedString("outertune@protonmail.com")
+                            AnnotatedString("xinplayer@proton.me")
                         )
                         clipboardManager.nativeClipboard.setPrimaryClip(clipData)
                     }
