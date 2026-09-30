@@ -26,7 +26,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.dd3boh.outertune"
+        applicationId = "com.xinplayer.music"
         minSdk = 24
         targetSdk = 36
         versionCode = 71
@@ -112,7 +112,7 @@ android {
         variant.outputs
             .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
             .forEach { output ->
-                var outputFileName = "OuterTune-${variant.versionName}-${output.baseName}-${output.versionCode}.apk"
+                var outputFileName = "XinPlayer-${variant.versionName}-${output.baseName}-${output.versionCode}.apk"
                 output.outputFileName = outputFileName
             }
     }
