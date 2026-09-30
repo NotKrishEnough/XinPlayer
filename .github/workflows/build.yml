@@ -39,3 +39,29 @@ jobs:
 
       - name: Run lint and unit tests
         run: ./gradlew lintCoreDebug testCoreDebugUnitTest --stacktrace -DskipFormatKtlint
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    steps:
+      - name: Send Telegram notification
+        env:
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BUILD_RESULT: ${{ needs.build.result }}
+          BRANCH: ${{ github.ref_name }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$BOT_TOKEN" ] || [ -z "$CHAT_ID" ]; then
+            echo "Telegram secrets not configured; skipping notification."
+            exit 0
+          fi
+
+          if [ "$BUILD_RESULT" = "success" ]; then
+            MESSAGE="✅ XinPlayer build succeeded!%0ABranch: $BRANCH%0A$RUN_URL"
+          else
+            MESSAGE="❌ XinPlayer build $BUILD_RESULT.%0ABranch: $BRANCH%0ACheck logs: $RUN_URL"
+          fi
+
+          curl --fail-with-body --silent --show-error             --request POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage"             --data-urlencode "chat_id=${CHAT_ID}"             --data-urlencode "text=${MESSAGE}"
