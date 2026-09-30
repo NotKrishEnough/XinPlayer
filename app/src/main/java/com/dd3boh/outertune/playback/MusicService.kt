@@ -145,6 +145,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import java.io.File
+import java.io.ByteArrayOutputStream
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -829,6 +830,42 @@ class MusicService : MediaLibraryService(),
 
 // Misc
 
+    /**
+     * Android lockscreen and heads-up media alerts consume artworkData from the
+     * session metadata. artworkUri alone is not consistently resolved by all
+     * SystemUI implementations, so resolve it and publish the bitmap bytes too.
+     */
+    private fun loadCurrentArtworkForSystemUi(mediaItem: MediaItem?) {
+        val artworkUri = mediaItem?.mediaMetadata?.artworkUri ?: return
+        val mediaId = mediaItem.mediaId
+        scope.launch {
+            try {
+                val bitmap = withContext(Dispatchers.IO) {
+                    CoilBitmapLoader(this@MusicService).loadBitmap(artworkUri).get()
+                }
+                val output = ByteArrayOutputStream()
+                bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, output)
+                val artworkData = output.toByteArray()
+                withContext(Dispatchers.Main) {
+                    val current = player.currentMediaItem ?: return@withContext
+                    if (current.mediaId != mediaId || artworkData.isEmpty()) return@withContext
+                    val updatedMetadata = current.mediaMetadata.buildUpon()
+                        .setArtworkData(
+                            artworkData,
+                            androidx.media3.common.MediaMetadata.PICTURE_TYPE_FRONT_COVER
+                        )
+                        .build()
+                    player.replaceMediaItem(
+                        player.currentMediaItemIndex,
+                        current.buildUpon().setMediaMetadata(updatedMetadata).build()
+                    )
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "Unable to publish artwork to system media controls", e)
+            }
+        }
+    }
+
     fun updateNotification() {
         mediaSession.setCustomLayout(
             listOf(
@@ -944,6 +981,7 @@ class MusicService : MediaLibraryService(),
 
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
         super.onMediaItemTransition(mediaItem, reason)
+        loadCurrentArtworkForSystemUi(mediaItem)
         // +2 when and error happens, and -1 when transition. Thus when error, number increments by 1, else doesn't change
         if (consecutivePlaybackErr > 0) {
             consecutivePlaybackErr--
