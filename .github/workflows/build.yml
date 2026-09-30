@@ -31,6 +31,9 @@ jobs:
       - name: Remove obsolete Kotlin Android plugin from ffMetadataEx
         run: sed -i '/kotlin("android")/d' ffMetadataEx/build.gradle.kts
 
+      - name: Remove obsolete Kotlin Android plugin from taglib
+        run: sed -i '/kotlin("android")/d' taglib/build.gradle.kts
+
       - name: Build debug APK
         run: ./gradlew assembleCoreDebug --stacktrace -DskipFormatKtlint
 
