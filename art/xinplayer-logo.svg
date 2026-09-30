@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<defs>
+  <radialGradient id="bg" cx="78%" cy="82%" r="105%">
+    <stop offset="0" stop-color="#20f000"/>
+    <stop offset=".42" stop-color="#00651d"/>
+    <stop offset="1" stop-color="#080a12"/>
+  </radialGradient>
+  <linearGradient id="glyph" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#efff48"/>
+    <stop offset=".48" stop-color="#7dff00"/>
+    <stop offset="1" stop-color="#00b927"/>
+  </linearGradient>
+  <radialGradient id="disc" cx="50%" cy="42%" r="65%">
+    <stop offset="0" stop-color="#00180c"/>
+    <stop offset="1" stop-color="#001007"/>
+  </radialGradient>
+  <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="18" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+<rect width="1024" height="1024" fill="url(#bg)"/>
+<circle cx="512" cy="500" r="305" fill="url(#disc)" stroke="#39ff14" stroke-width="4" filter="url(#glow)"/>
+<circle cx="512" cy="500" r="302" fill="none" stroke="#b6ff32" stroke-opacity=".55" stroke-width="2"/>
+<text x="512" y="626" text-anchor="middle" font-family="'Noto Sans CJK SC','Microsoft YaHei',sans-serif" font-size="470" font-weight="800" fill="url(#glyph)" stroke="#dfff82" stroke-width="2" paint-order="stroke" filter="url(#glow)">鑫</text>
+</svg>
