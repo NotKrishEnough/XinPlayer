@@ -1,6 +1,6 @@
-# OuterTune
+# Xin Player
 
-<img src="./assets/outertune.webp" height="88" alt="OuterTune app icon">
+<p align="center"><img src="./art/xinplayer-logo.svg" width="240" alt="Xin Player 鑫 neon green logo"></p>
 
 A Material 3 YouTube Music client & local music player for Android
 
